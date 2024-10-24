@@ -82,6 +82,8 @@ def make_predictions(model, game_data, forecast_days=5):
 
     # Apply the same feature engineering used during training to ensure consistency
     future = engineer_features(future)
+    # Add a default value for game_id if it's required by the model
+    future['game_id'] = 1  # or another constant value if game_id is required
 
     # Make predictions using the trained model
     forecast = model.predict(future)
