@@ -12,8 +12,9 @@ import json
 # Load the trained model
 @st.cache_resource
 def load_model():
+    model_path = '/workspaces/thesis-ginga999/global_prophet_model_best.pkl'  # Updated path
     try:
-        with open('global_prophet_model_best.pkl', 'rb') as f:
+        with open(model_path, 'rb') as f:
             model = pickle.load(f)
         st.success("Model loaded successfully.")
     except Exception as e:
