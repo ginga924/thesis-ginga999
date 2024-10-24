@@ -75,12 +75,18 @@ def engineer_features(df):
 
 # Function to make predictions using the Prophet model
 def make_predictions(model, game_data, forecast_days=5):
+    # Create future DataFrame for predictions
     future = pd.DataFrame({
         'ds': pd.date_range(start=game_data['ds'].max() + pd.Timedelta(days=1), periods=forecast_days)
     })
 
-    # Make predictions
-    future = future[['ds']]
+    # Apply the same feature engineering used during training to ensure consistency
+    future = engineer_features(future)
+
+    # Ensure the 'game_id' column is included, as it might have been used during training
+    future['game_id'] = game_data['game_id'].iloc[0]  # Use the same game_id for prediction
+
+    # Make predictions using the trained model
     forecast = model.predict(future)
     forecast['yhat'] = np.maximum(0, forecast['yhat'])  # Ensure no negative predictions
     return forecast
