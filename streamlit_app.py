@@ -64,6 +64,14 @@ def get_game_data(host, port, database, user, password):
     game_data = game_data.sort_values('ds')  # Ensure the data is in chronological order
 
     return game_data
+# Enhanced Feature engineering function (ensuring consistent features for both training and inference)
+def engineer_features(df):
+    df['day_of_week'] = df['ds'].dt.dayofweek
+    df['month'] = df['ds'].dt.month
+    df['year'] = df['ds'].dt.year
+    df['day_of_year'] = df['ds'].dt.dayofyear
+    df['week_of_year'] = df['ds'].dt.isocalendar().week.astype(int)
+    return df
 
 # Function to make predictions using the Prophet model
 def make_predictions(model, game_data, forecast_days=5):
