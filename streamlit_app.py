@@ -7,6 +7,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 from prophet import Prophet
+import json
 
 # Load the trained model
 @st.cache_resource
